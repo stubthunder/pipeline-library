@@ -1,0 +1,10 @@
+kind: Pod
+metadata:
+  name: python-app
+spec:
+  containers:
+  - name: python
+    image: python:3.9
+    command:
+    - cat
+    tty: true

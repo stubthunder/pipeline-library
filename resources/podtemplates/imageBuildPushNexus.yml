@@ -1,0 +1,32 @@
+kind: Pod
+metadata:
+  name: img
+  labels:
+    run: img
+spec:
+  containers:
+  - name: img
+    image: jess/img@sha256:cb74904de18d88e4f7e505006535b25c91305a09a5a62909d4920f75e97ccd4b
+    imagePullPolicy: Always
+    command:
+    - cat
+    tty: true
+    securityContext:
+      privileged: true
+    volumeMounts:
+    - name: docker-config
+      mountPath: /home/user/.docker/
+    - name: cache-volume
+      mountPath: /tmp/
+  volumes:
+  - name: docker-config
+    projected:
+      sources:
+      - secret:
+          name: nexuscred
+          items:
+           - key: .dockerconfigjson
+             path: config.json
+  - name: cache-volume
+    emptyDir: {}
+  restartPolicy: Never

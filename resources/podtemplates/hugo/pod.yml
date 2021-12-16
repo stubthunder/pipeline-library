@@ -1,0 +1,12 @@
+kind: Pod
+metadata:
+  name: hugo-app
+spec:
+  containers:
+  - name: hugo
+    image: jojomi/hugo:0.58
+    command:
+    - cat
+    tty: true
+  securityContext:
+    runAsUser: 1000

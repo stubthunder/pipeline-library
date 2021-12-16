@@ -1,0 +1,17 @@
+kind: Pod
+metadata:
+  name: nodejs-ab
+spec:
+  containers:
+  - name: nodejs
+    image: node:10.10.0-alpine
+    command:
+    - cat
+    tty: true
+  - name: apache-benchmark
+    image: gcr.io/technologists/apache-benchmark:0.0.1
+    command:
+    - cat
+    tty: truee
+  securityContext:
+    runAsUser: 1000

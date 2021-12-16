@@ -1,0 +1,10 @@
+kind: Pod
+metadata:
+  name: python-app
+spec:
+  containers:
+  - name: python3
+    image: johns2te/pipenv:3.7
+    command:
+    - cat
+    tty: true

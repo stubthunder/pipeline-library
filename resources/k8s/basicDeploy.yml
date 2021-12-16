@@ -1,0 +1,64 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: REPLACE_SERVICE_NAME
+  labels:
+    net.beedemo.deploy.type: workshop
+spec:
+  ports:
+  - port: 80
+    targetPort: 8080
+    protocol: TCP
+    name: http
+  selector:
+    app: REPLACE_SERVICE_NAME
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: REPLACE_SERVICE_NAME-staging
+  labels:
+    net.beedemo.deploy.type: workshop
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: REPLACE_SERVICE_NAME
+      labels:
+        net.beedemo.deploy.type: workshop
+        app: REPLACE_SERVICE_NAME
+        env: staging
+    spec:
+      serviceAccountName: cjoc
+      containers:
+      - name: REPLACE_SERVICE_NAME
+        image: REPLACE_IMAGE_TAG
+        resources:
+          requests:
+            memory: "100Mi"
+            cpu: "50m"
+        imagePullPolicy: Always
+        ports:
+        - name: public
+          containerPort: 8080
+      securityContext:
+        runAsUser: 1000
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: REPLACE_SERVICE_NAME
+  labels:
+    net.beedemo.deploy.type: workshop
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /REPLACE_SERVICE_NAME/?(.*)
+        backend:
+          serviceName: REPLACE_SERVICE_NAME
+          servicePort: 80
+    host: staging.cb-sa.io

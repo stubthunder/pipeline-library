@@ -1,0 +1,13 @@
+[ {
+  "action" : "fail",
+  "customMessage" : "Pipelines must have a global timeout of 1 hour or less",
+  "description" : "Global Timeout ploicy for all Pipelines on Master",
+  "filter" : "",
+  "name" : "global-timeout",
+  "rules" : [ {
+    "$class" : "EntirePipelineTimeoutRule",
+    "maxTime" : 1,
+    "maxUnit" : "HOURS",
+    "properties" : "1 HOURS"
+  } ]
+} ]

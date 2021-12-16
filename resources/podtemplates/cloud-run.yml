@@ -1,0 +1,18 @@
+kind: Pod
+metadata:
+  name: cloud-run-pod
+spec:
+  containers:
+  - name: gcp-sdk
+    image: google/cloud-sdk:252.0.0-slim
+    command:
+    - cat
+    tty: true
+    volumeMounts:
+      - name: gcp-logs
+        mountPath: /.config/gcloud/logs
+  volumes:
+  - name: gcp-logs
+    emptyDir: {}
+  securityContext:
+    runAsUser: 1000

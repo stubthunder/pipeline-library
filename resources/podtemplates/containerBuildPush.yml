@@ -1,0 +1,34 @@
+kind: Pod
+metadata:
+  name: img-gcloud
+  labels:
+    run: img-gcloud
+  annotations:
+    container.apparmor.security.beta.kubernetes.io/img-gcloud: unconfined
+    container.seccomp.security.alpha.kubernetes.io/img-gcloud: unconfined
+spec:
+  serviceAccount: jenkins
+  securityContext:
+    runAsUser: 1000
+  containers:
+  - name: img-gcloud
+    image: gcr.io/core-workshop/img-gcloud@sha256:c1665a6bdd5a519ca481b059c9ed9ceadc1952e7041a44d3f7a70ae94e2ef877
+    imagePullPolicy: Always
+    command:
+    - cat
+    tty: true
+    volumeMounts:
+    - name: docker-config
+      mountPath: /.docker/
+    - name: gcloud-config
+      mountPath: /.config/gcloud
+    - name: cache-volume
+      mountPath: /tmp/
+  volumes:
+  - name: docker-config
+    emptyDir: {}
+  - name: gcloud-config
+    emptyDir: {}
+  - name: cache-volume
+    emptyDir: {}
+  restartPolicy: Never

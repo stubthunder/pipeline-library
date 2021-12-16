@@ -1,0 +1,14 @@
+kind: Pod
+metadata:
+  name: helm
+spec:
+  serviceAccountName: jenkins
+  containers:
+  - name: helm
+    image: ldonleycb/helm:3.1
+    resources:
+      requests:
+        memory: "500Mi"
+    command:
+    - cat
+    tty: true

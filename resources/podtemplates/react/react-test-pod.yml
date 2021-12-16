@@ -1,0 +1,12 @@
+kind: Pod
+metadata:
+  name: react-app
+spec:
+  containers:
+  - name: nodejs
+    image: node:lts-alpine
+    command:
+    - cat
+    tty: true
+  securityContext:
+    runAsUser: 1000
